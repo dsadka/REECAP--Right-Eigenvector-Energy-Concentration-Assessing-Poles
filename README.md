@@ -1,7 +1,8 @@
 ## s_p: Detection of Clustered Matrix Pencil Poles
 
 The MATLAB code in this repository reproduces the numerical results of the REECAP s_p detection score for
-clustered poles. For each matrix-pencil pole i, the score is s_p(i) = sum_{l<=p} |q_i(l)|^2, where q_i is the i'th eigenvector of the reduced pencil.
+clustered poles. For each matrix-pencil pole i, the score is s_p(i) = sum_{k<=p} |W(k,i)|^2, where W holds
+the eigenvectors of the reduced pencil and p is an estimate of the number of clusters.
 
 To reproduce the figures, download the 's_p' and 'toolbox' folders and run the files in the 's_p' folder.
 The figures are saved to a 'figures' folder next to them.
@@ -12,6 +13,7 @@ The figures are saved to a 'figures' folder next to them.
 | `pd_rmse_vs_baselines.m` | Figure 3: p_d (a, c) and frequency RMSE with the CRB (b, d) of s_p and the baselines, vs SNR (a, b) and pole spacing (c, d) |
 | `hyperparameter_sensitivity.m` | Figure 4, 7, 8: Sensitivity of s_p to p, L and the working rank K-hat |
 | `detection_auc_p_rules.m` | Figure 6: Detection AUC of s_p for different rules of choosing p |
+| `pd_auc_noise_table.m` | Table: area under the p_d-vs-SNR curve under normal and bi-normal noise |
 | `runtime_vs_N.m` | Figure 5: Run time of s_p and the baselines vs N |
 
 Settings at the top of each script:
@@ -20,3 +22,5 @@ Settings at the top of each script:
 
 Requires MATLAB R2020a or later (`matchpairs`, `exportgraphics`, `turbo`) and the Statistics and Machine
 Learning Toolbox (`kmeans`, used in `runtime_vs_N.m`).
+
+## Citation
