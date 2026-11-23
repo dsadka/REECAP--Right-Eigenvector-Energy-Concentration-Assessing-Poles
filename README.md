@@ -1,4 +1,4 @@
-## s_p: Detection of Clustered Matrix Pencil Poles
+## REECAP: Right Eigenvector Energy Concentration for Assessing candidate Poles. Detection of Clustered Matrix Pencil Poles
 
 The MATLAB code in this repository reproduces the numerical results of the REECAP s_p detection score for
 clustered poles. For each matrix-pencil pole i, the score is s_p(i) = sum_{l<=p} |q_i(l)|^2, where q_i is the i'th eigenvector of the reduced pencil.
