@@ -22,5 +22,3 @@ Settings at the top of each script:
 
 Requires MATLAB R2020a or later (`matchpairs`, `exportgraphics`, `turbo`) and the Statistics and Machine
 Learning Toolbox (`kmeans`, used in `runtime_vs_N.m`).
-
-## Citation
