@@ -3,7 +3,13 @@
 %   p_d  = P(Mhat = M), Mhat = number of selected poles
 %   RMSE = sqrt(mean over trials of get_freqmatch_error): one-to-one frequency
 %          pairing of the selected and true poles + a penalty per missing or extra pole
-function [Pd, RMSE, CRB, params] = gen_data_pd_rmse_baselines(sweep_var, pMode)
+% binormal (optional) = [tail_frac, mu2, sigma2]: use bi-normal instead of normal noise
+%          (see generate_signal_with_binormal_noise.m)
+function [Pd, RMSE, CRB, params] = gen_data_pd_rmse_baselines(sweep_var, pMode, binormal)
+
+if nargin < 3
+    binormal = [];
+end
 
 %% Settings
 params = get_cluster_settings();
@@ -42,8 +48,12 @@ for i = 1:nX
     for rep = 1:params.Nrep
         [freqs, damps, amps, M, nClusters] = gen_cluster_poles(clu, N);
         true_poles = exp(-damps*params.dt + 1i*freqs*params.dt);
-        [signal, ~, noise_var] = generate_sum_of_k_complex_exp_with_add_noise(freqs, damps, zeros(1,M), amps, ...
-                                                                              params.dt, interval, SNR, params.noise);
+        if isempty(binormal)
+            [signal, ~, noise_var] = generate_sum_of_k_complex_exp_with_add_noise(freqs, damps, zeros(1,M), amps, ...
+                                                                                  params.dt, interval, SNR, params.noise);
+        else
+            [signal, noise_var] = generate_signal_with_binormal_noise(freqs, damps, amps, params.dt, interval, SNR, binormal);
+        end
         MP = get_full_rank_MP(signal, L);
         pen = get_order_mismatch_penalty(sweep_var, amps, SNR, clu.minSepR);
         k_max = min(MP.r, size(MP.U,1) - 2);
